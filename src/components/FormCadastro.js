@@ -41,10 +41,8 @@ class formCadastro extends Component {
                             style={{ fontSize: 20, height: 45 }}
                             onChangeText={texto => this.props.modificaSenha(texto)}
                         />
-                        <Text
-                            style={{ color: '#ff0000', fontSize: 18 }}
-                        >
-                            {this.props.cadastroErro}
+                        <Text style={{ color: '#ff0000', fontSize: 18 }}>
+                            {this.props.erroCadastro}
                         </Text>
                     </View>
                     <View style={{ flex: 1 }}>
@@ -64,7 +62,7 @@ const mapStateToProps = state => ({
     nome: state.AutenticacaoReducer.nome,
     email: state.AutenticacaoReducer.email,
     senha: state.AutenticacaoReducer.senha,
-    cadastroErro: state.AutenticacaoReducer.cadastroErro
+    erroCadastro: state.AutenticacaoReducer.erroCadastro
 });
 
 export default connect(mapStateToProps, {

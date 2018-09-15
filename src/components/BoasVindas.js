@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 const bg = require('../imgs/bg.png');
 const logo = require('../imgs/logo.png');
 
-export default props => (
+export default () => (
     <ImageBackground style={{ flex: 1 }} source={bg}>
         <View style={{ flex: 1, padding: 15 }}>
             <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>

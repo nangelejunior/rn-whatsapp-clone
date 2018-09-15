@@ -2,7 +2,8 @@ const INITIAL_STATE = {
     nome: '',
     email: '',
     senha: '',
-    cadastroErro: ''
+    erroCadastro: '',
+    erroLogin: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -19,10 +20,18 @@ export default (state = INITIAL_STATE, action) => {
     }
 
     if (action.type === 'cadastro_usuario_erro') {
-        return { ...state, cadastroErro: action.payload };
+        return { ...state, erroCadastro: action.payload };
     }
 
     if (action.type === 'cadastro_usuario_sucesso') {
+        return { ...state, nome: '', senha: '' };
+    }
+
+    if (action.type === 'login_usuario_erro') {
+        return { ...state, erroLogin: action.payload };
+    }
+
+    if (action.type === 'login_usuario_sucesso') {
         return { ...state, nome: '', senha: '' };
     }
 
