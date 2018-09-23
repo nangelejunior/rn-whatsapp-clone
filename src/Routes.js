@@ -5,6 +5,7 @@ import FormLogin from './components/FormLogin';
 import FormCadastro from './components/FormCadastro';
 import BoasVindas from './components/BoasVindas';
 import Principal from './components/Principal';
+import AdicionarContato from './components/AdicionarContato';
 
 export default () => (
     <Router navigationBarStyle={{ backgroundColor: '#115E54' }} titleStyle={{ color: '#FFF' }}>
@@ -32,6 +33,12 @@ export default () => (
                 component={Principal}
                 title='Principal'
                 hideNavBar
+            />
+            <Scene
+                key='adicionarContato'
+                component={AdicionarContato}
+                title='AdicionarContato'
+                hideNavBar={false}
             />
         </Stack>
     </Router>
