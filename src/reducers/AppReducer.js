@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-    adiciona_contato_email: 'teste@teste.com.br'
+    adiciona_contato_email: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
