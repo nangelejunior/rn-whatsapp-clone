@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import b64 from 'base-64';
 import _ from 'lodash';
 
