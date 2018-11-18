@@ -2,7 +2,12 @@ import firebase from 'react-native-firebase';
 import b64 from 'base-64';
 import _ from 'lodash';
 
-import { MODIFICA_ADICIONA_CONTATO_EMAIL, ADICIONA_CONTATO_ERRO, ADICIONA_CONTATO_SUCESSO } from './types';
+import {
+    MODIFICA_ADICIONA_CONTATO_EMAIL,
+    ADICIONA_CONTATO_ERRO,
+    ADICIONA_CONTATO_SUCESSO,
+    LISTA_CONTATO_USUARIO
+} from './types';
 
 export const modificaAdicionaContatoEmail = texto => ({
     type: MODIFICA_ADICIONA_CONTATO_EMAIL,
@@ -21,7 +26,7 @@ export const adicionaContato = email => dispatch => {
                 const { currentUser } = firebase.auth();
                 const emailUsuarioB64 = b64.encode(currentUser.email);
 
-                firebase.database().ref(`/usuario_contato/${emailUsuarioB64}`)
+                firebase.database().ref(`/usuario_contatos/${emailUsuarioB64}`)
                     .push({ email, nome: dadosUsuario.nome })
                     .then(() => adicionaContatoSucesso(dispatch))
                     .catch(erro => adicionaContatoErro(erro.message, dispatch));
@@ -52,3 +57,16 @@ export const habilitaInclusaoContato = () => ({
     type: ADICIONA_CONTATO_SUCESSO,
     payload: false
 });
+
+export const contatosUsuarioFetch = () => {
+    const { currentUser } = firebase.auth();
+
+    return (dispatch) => {
+        const emailUsuarioB64 = b64.encode(currentUser.email);
+
+        firebase.database().ref(`/usuario_contatos/${emailUsuarioB64}`)
+            .on('value', snapshot => {
+                dispatch({ type: LISTA_CONTATO_USUARIO, payload: snapshot.val() });
+            });
+    };
+};

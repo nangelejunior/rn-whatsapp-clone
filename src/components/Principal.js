@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Dimensions } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 
 import TabBarMenu from './TabBarMenu';
@@ -31,9 +30,6 @@ export default class Principal extends Component {
                 renderScene={this.renderScene}
                 renderTabBar={this.renderTabBar}
                 onIndexChange={this.handleIndexChange}
-                initialLayout={{
-                    width: Dimensions.get('window').width,
-                }}
             />
         );
     }
