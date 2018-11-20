@@ -6,6 +6,7 @@ import FormCadastro from './components/FormCadastro';
 import BoasVindas from './components/BoasVindas';
 import Principal from './components/Principal';
 import AdicionarContato from './components/AdicionarContato';
+import Conversa from './components/Conversa';
 
 export default () => (
     <Router navigationBarStyle={{ backgroundColor: '#115E54' }} titleStyle={{ color: '#FFF' }}>
@@ -38,6 +39,12 @@ export default () => (
                 key='adicionarContato'
                 component={AdicionarContato}
                 title='AdicionarContato'
+                hideNavBar={false}
+            />
+            <Scene
+                key='conversa'
+                component={Conversa}
+                title='Conversa'
                 hideNavBar={false}
             />
         </Stack>
