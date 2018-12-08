@@ -23,7 +23,11 @@ class Contatos extends Component {
 
     renderItem = ({ item }) => (
         <TouchableHighlight
-            onPress={() => Actions.conversa()}
+            onPress={() => Actions.conversa({
+                title: item.nome,
+                contatoNome: item.nome,
+                contatoEmail: item.email
+            })}
         >
             <View
                 style={{

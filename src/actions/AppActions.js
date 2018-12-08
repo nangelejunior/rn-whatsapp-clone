@@ -76,3 +76,37 @@ export const modificaMensagem = texto => ({
     type: MODIFICA_MENSAGEM,
     payload: texto
 });
+
+export const enviaMensagem = (mensagem, contatoNome, contatoEmail) => {
+    const { currentUser } = firebase.auth();
+    const usuarioEmail = currentUser.email;
+
+    return dispatch => {
+        const usuarioEmailB64 = b64.encode(usuarioEmail);
+        const contatoEmailB64 = b64.encode(contatoEmail);
+
+        firebase.database().ref(`/mensagens/${usuarioEmailB64}/${contatoEmailB64}`)
+            .push({ mensagem, tipo: 'e' })
+            .then(() => {
+                firebase.database().ref(`/mensagens/${contatoEmailB64}/${usuarioEmailB64}`)
+                    .push({ mensagem, tipo: 'r' })
+                    .then(() => {
+                        dispatch({ type: 'xyz' });
+                    });
+            })
+            .then(() => {
+                firebase.database().ref(`/usuario_conversas/${usuarioEmailB64}/${contatoEmailB64}`)
+                    .set({ nome: contatoNome, email: contatoEmail });
+            })
+            .then(() => {
+                firebase.database().ref(`/contatos/${usuarioEmailB64}`)
+                    .once('value')
+                    .then(snapshot => {
+                        const dadosUsuario = _.first(_.values(snapshot.val()));
+
+                        firebase.database().ref(`/usuario_conversas/${contatoEmailB64}/${usuarioEmailB64}`)
+                            .set({ nome: dadosUsuario.nome, email: usuarioEmail });
+                    });
+            });
+    };
+};
