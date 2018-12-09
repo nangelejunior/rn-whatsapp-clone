@@ -7,7 +7,9 @@ import {
     ADICIONA_CONTATO_ERRO,
     ADICIONA_CONTATO_SUCESSO,
     LISTA_CONTATO_USUARIO,
-    MODIFICA_MENSAGEM
+    MODIFICA_MENSAGEM,
+    LISTA_CONVERSA_USUARIO,
+    ENVIAR_MENSAGEM_SUCESSO
 } from './types';
 
 export const modificaAdicionaContatoEmail = texto => ({
@@ -91,7 +93,7 @@ export const enviaMensagem = (mensagem, contatoNome, contatoEmail) => {
                 firebase.database().ref(`/mensagens/${contatoEmailB64}/${usuarioEmailB64}`)
                     .push({ mensagem, tipo: 'r' })
                     .then(() => {
-                        dispatch({ type: 'xyz' });
+                        dispatch({ type: ENVIAR_MENSAGEM_SUCESSO });
                     });
             })
             .then(() => {
@@ -107,6 +109,20 @@ export const enviaMensagem = (mensagem, contatoNome, contatoEmail) => {
                         firebase.database().ref(`/usuario_conversas/${contatoEmailB64}/${usuarioEmailB64}`)
                             .set({ nome: dadosUsuario.nome, email: usuarioEmail });
                     });
+            });
+    };
+};
+
+export const conversaUsuarioFetch = contatoEmail => {
+    const { currentUser } = firebase.auth();
+
+    const usuarioEmailB64 = b64.encode(currentUser.email);
+    const contatoEmailB64 = b64.encode(contatoEmail);
+
+    return dispatch => {
+        firebase.database().ref(`/mensagens/${usuarioEmailB64}/${contatoEmailB64}`)
+            .on('value', snapshot => {
+                dispatch({ type: LISTA_CONVERSA_USUARIO, payload: snapshot.val() });
             });
     };
 };
