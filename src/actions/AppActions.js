@@ -128,14 +128,13 @@ export const conversaUsuarioFetch = contatoEmail => {
     };
 };
 
-export const conversasUsuarioFetch = contatoEmail => {
+export const conversasUsuarioFetch = () => {
     const { currentUser } = firebase.auth();
 
     const usuarioEmailB64 = b64.encode(currentUser.email);
-    const contatoEmailB64 = b64.encode(contatoEmail);
 
     return dispatch => {
-        firebase.database().ref(`/usuario_conversas/${usuarioEmailB64}/${contatoEmailB64}`)
+        firebase.database().ref(`/usuario_conversas/${usuarioEmailB64}`)
             .on('value', snapshot => {
                 dispatch({ type: LISTA_CONVERSAS_USUARIO, payload: snapshot.val() });
             });
