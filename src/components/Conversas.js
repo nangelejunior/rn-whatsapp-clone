@@ -38,7 +38,6 @@ class Conversas extends Component {
                 }}
             >
                 <Text style={{ fontSize: 25 }}>{item.nome}</Text>
-                <Text style={{ fontSize: 18 }}>{item.email}</Text>
             </ View>
         </TouchableHighlight >
     );
